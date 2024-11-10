@@ -24,15 +24,14 @@ public class UserController {
      * {email: email, upass: password} <br>
      * @return <br>
      * {code: 0, msg: error_msg} or <br>
-     * {code: 1, msg: success_msg, data: userId} <br>
-     * //todo() here userId should be replaced by token in the future
+     * {code: 1, msg: success_msg, data: token} <br>
      */
     @PostMapping("/login")
     public ResponseVO login(@RequestBody Map<String, String> requestData) {
         String email = requestData.get("email");
         String password = requestData.get("upass");
         // check email
-        if (!checkEmailValid(email)) {
+        if (checkEmailInValid(email)) {
             return ResponseBuilder.buildErrorResponse("邮箱格式不正确", null);
         }
         // login verification
@@ -60,17 +59,17 @@ public class UserController {
         String upass = requestData.get("upass");
         Role role = Role.valueOf(requestData.get("role"));
         // check email
-        if (!checkEmailValid(email)) {
+        if (checkEmailInValid(email)) {
             return ResponseBuilder.buildErrorResponse("邮箱格式不正确", null);
         }
         //login in
         return userService.register(email, upass, role);
     }
 
-    boolean checkEmailValid(String email) {
+    boolean checkEmailInValid(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+        return !matcher.matches();
     }
 }
