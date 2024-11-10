@@ -3,6 +3,7 @@ package org.interaction.interactionbackend.controller;
 import org.interaction.interactionbackend.enums.Role;
 import org.interaction.interactionbackend.po.*;
 import org.interaction.interactionbackend.service.UserService;
+import org.interaction.interactionbackend.util.JwtUtil;
 import org.interaction.interactionbackend.util.ResponseBuilder;
 import org.interaction.interactionbackend.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * login api
@@ -37,7 +41,7 @@ public class UserController {
         // login verification
         User user = userService.login(email, password);
         if (user != null) {
-            return ResponseBuilder.buildSuccessResponse("登录成功", user.getId());
+            return ResponseBuilder.buildSuccessResponse("登录成功", jwtUtil.generateToken(user));
         } else {
             return ResponseBuilder.buildErrorResponse("用户名或密码错误", null);
         }

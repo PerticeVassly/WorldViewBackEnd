@@ -1,12 +1,13 @@
 package org.interaction.interactionbackend.configure;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.interaction.interactionbackend.enums.Role;
 import org.interaction.interactionbackend.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 @Component
 public class TokenInterceptor implements HandlerInterceptor {
@@ -28,6 +29,8 @@ public class TokenInterceptor implements HandlerInterceptor {
         request.setAttribute("email", email);
         request.setAttribute("role", role);
         request.setAttribute("userId", userId);
+        // 打印日志查看提取的userId
+        System.out.println("Extracted userId: " + userId);
         return true;
     }
 }

@@ -1,9 +1,11 @@
 package org.interaction.interactionbackend.po;
 
-import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.interaction.interactionbackend.enums.Role;
+
+import javax.persistence.*;
 
 /**
  * the basic information of user

@@ -9,7 +9,7 @@ import org.interaction.interactionbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
 
 @Component
 public class JwtUtil {
@@ -20,12 +20,17 @@ public class JwtUtil {
     private final String SECRET_KEY = "my_secret_key"; // (demo here)
 
     public String generateToken(User user) {
+        // here java 1.8
         return Jwts.builder()
-                .addClaims(Map.of("role", user.getRole()))
-                .addClaims(Map.of("id", user.getId()))
+                .addClaims(
+                        new HashMap<String, Object>() {{
+                            put("id", user.getId());
+                            put("role", user.getRole().toString());
+                        }}
+                )
                 .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10小时过期
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }

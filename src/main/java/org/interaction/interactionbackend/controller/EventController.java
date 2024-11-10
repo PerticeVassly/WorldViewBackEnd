@@ -1,14 +1,14 @@
 package org.interaction.interactionbackend.controller;
 
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
 import org.interaction.interactionbackend.service.EventService;
 import org.interaction.interactionbackend.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -27,10 +27,11 @@ public class EventController {
      * {code: 1, msg: success_msg}
      */
     @PostMapping("/register")
-    public ResponseVO registerEvent(Map<String, String> formData,
+    public ResponseVO registerEvent(@RequestBody Map<String, String> formData,
                                     HttpServletRequest request) {
         Integer userId = (Integer) request.getAttribute("userId");
-        return eventService.registerEvent(userId, formData.get(
-                "contact"), Integer.valueOf(formData.get("eventId")));
+        ResponseVO ans = eventService.registerEvent(userId, formData.get(
+                "contact"), Integer.parseInt(formData.get("eventId")));
+        return ans;
     }
 }
