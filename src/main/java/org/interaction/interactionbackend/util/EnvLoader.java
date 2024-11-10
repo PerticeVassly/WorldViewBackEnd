@@ -6,11 +6,9 @@ import java.util.Properties;
 public class EnvLoader {
     public static void loadEnv(String path) throws IOException {
         Properties properties = new Properties();
-
         try (FileReader reader = new FileReader(path)) {
             properties.load(reader);
         }
-
         properties.forEach((key, value) -> {
             String keyStr = (String) key;
             String valueStr = (String) value;
