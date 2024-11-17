@@ -1,14 +1,15 @@
 package org.interaction.interactionbackend.controller;
 
 import org.interaction.interactionbackend.enums.Role;
+import org.interaction.interactionbackend.exception.WorldViewException;
 import org.interaction.interactionbackend.po.*;
 import org.interaction.interactionbackend.service.UserService;
-import org.interaction.interactionbackend.util.JwtUtil;
-import org.interaction.interactionbackend.util.ResponseBuilder;
 import org.interaction.interactionbackend.vo.ResponseVO;
+import org.interaction.interactionbackend.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,44 +20,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
 
-    /**
-     * login api
-     * @param requestData <br>
-     * {email: email, upass: password} <br>
-     * @return <br>
-     * {code: 0, msg: error_msg} or <br>
-     * {code: 1, msg: success_msg, data: token} <br>
-     */
+
     @PostMapping("/login")
     public ResponseVO login(@RequestBody Map<String, String> requestData) {
         String email = requestData.get("email");
         String password = requestData.get("upass");
         // check email
         if (checkEmailInValid(email)) {
-            return ResponseBuilder.buildErrorResponse("邮箱格式不正确", null);
+            throw WorldViewException.emailFormatWrong();
         }
         // login verification
-        User user = userService.login(email, password);
-        if (user != null) {
-            return ResponseBuilder.buildSuccessResponse("登录成功", jwtUtil.generateToken(user));
-        } else {
-            return ResponseBuilder.buildErrorResponse("用户名或密码错误", null);
-        }
+        return userService.login(email, password);
     }
 
-    /**
-     * register api
-     * @param requestData <br>
-     * {email: email, <br>
-     * upass: password, <br>
-     * role: ADMIN | PHOTOGRAPHER} <br>
-     * @return <br>
-     * {code: 0, msg: error_msg} or <br>
-     * {code: 1, msg: success_msg} <br>
-     */
     @PostMapping("/add")
     public ResponseVO register(@RequestBody Map<String, String> requestData) {
         String email = requestData.get("email");
@@ -64,7 +41,7 @@ public class UserController {
         Role role = Role.valueOf(requestData.get("role"));
         // check email
         if (checkEmailInValid(email)) {
-            return ResponseBuilder.buildErrorResponse("邮箱格式不正确", null);
+            throw WorldViewException.emailFormatWrong();
         }
         //login in
         return userService.register(email, upass, role);
@@ -75,5 +52,28 @@ public class UserController {
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
         return !matcher.matches();
+    }
+
+    @PostMapping("/info")
+    public ResponseVO getUserInfo(HttpServletRequest request) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return userService.getUserInfo(currentUser);
+    }
+
+    @PostMapping("/resetInfo")
+    public ResponseVO resetUserInfo(@RequestBody UserVO newUserInfo,
+                                    HttpServletRequest request) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return userService.resetUserInfo(newUserInfo, currentUser);
+    }
+
+    @PostMapping("/resetPwd")
+    public ResponseVO resetPwd(@RequestBody Map<String, String> requestData,
+                               HttpServletRequest request) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        String oldPwd = requestData.get("oldPwd");
+        String newPwd = requestData.get("newPwd");
+        String renewPwd = requestData.get("renewPwd");
+        return userService.resetUserPwd(currentUser, oldPwd, newPwd, renewPwd);
     }
 }

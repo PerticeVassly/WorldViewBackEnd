@@ -55,6 +55,7 @@ public class UserTests {
         }
     }
 
+    @Deprecated
     @Test
     public void testUserLogin() throws Exception {
         String email = "testuser@example.com";
@@ -62,7 +63,7 @@ public class UserTests {
         User user = new User(email, password, Role.NORMAL);
         user.setId(1);
         // success
-        when(userService.login(anyString(), anyString())).thenReturn(user);
+        when(userService.login(anyString(), anyString())).thenReturn(null);
         Map<String, String> requestDataSuccess = new HashMap<>();
         requestDataSuccess.put("email", email);
         requestDataSuccess.put("upass", password);
@@ -81,6 +82,7 @@ public class UserTests {
                         .andExpect(jsonPath("$.code").value(0));
     }
 
+    @Deprecated
     @Test
     public void testTokenInterceptor() throws Exception {
         // fail
@@ -95,7 +97,7 @@ public class UserTests {
         User user = new User(email, password, Role.NORMAL);
         user.setId(1);
         //first login to get token
-        when(userService.login(anyString(), anyString())).thenReturn(user);
+        when(userService.login(anyString(), anyString())).thenReturn(null);
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(
                 "/user/login")
                         .contentType(MediaType.APPLICATION_JSON)
