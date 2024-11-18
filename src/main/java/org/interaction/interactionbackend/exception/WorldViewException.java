@@ -20,16 +20,20 @@ public class WorldViewException extends RuntimeException {
         return new WorldViewException("邮箱已存在!");
     }
 
-    public static WorldViewException phoneExist() {
-        return new WorldViewException("手机号已存在!");
-    }
-
     public static WorldViewException pwdWrong() {
         return new WorldViewException("密码错误!");
     }
 
     public static WorldViewException pwdNotSame() {
         return new WorldViewException("两次密码不一致!");
+    }
+
+    public static WorldViewException alreadyRegisteredEvent() {
+        return new WorldViewException("已经报名过该活动!");
+    }
+
+    public static WorldViewException alreadyJoinedSelection() {
+        return new WorldViewException("已经参加此评选!");
     }
 
 }

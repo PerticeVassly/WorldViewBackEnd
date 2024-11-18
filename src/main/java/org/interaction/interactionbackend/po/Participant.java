@@ -17,13 +17,13 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "userId", nullable = false)
     private Integer userId;
 
-    @Column(nullable = false)
+    @Column(name = "contact",nullable = false)
     private String contact;
 
-    @Column(nullable = false)
+    @Column(name = "eventId",nullable = false)
     private Integer eventId;
 
     public Participant(int userId, String contact, Integer eventId) {

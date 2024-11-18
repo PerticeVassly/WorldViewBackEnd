@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import org.interaction.interactionbackend.po.User;
 import org.interaction.interactionbackend.repository.UserRepository;
-import org.interaction.interactionbackend.service.EventService;
-import org.interaction.interactionbackend.service.UserService;
+import org.interaction.interactionbackend.serviceimpl.events.PhotographerSelectionServiceImpl;
+import org.interaction.interactionbackend.serviceimpl.UserServiceImpl;
 import org.interaction.interactionbackend.util.EnvLoader;
 import org.interaction.interactionbackend.util.ResponseBuilder;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,13 +34,13 @@ public class UserTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @MockBean
     private UserRepository userRepository;
 
     @MockBean
-    private EventService eventService;
+    private PhotographerSelectionServiceImpl photographerSelectionServiceImpl;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -63,7 +63,7 @@ public class UserTests {
         User user = new User(email, password, Role.NORMAL);
         user.setId(1);
         // success
-        when(userService.login(anyString(), anyString())).thenReturn(null);
+        when(userServiceImpl.login(anyString(), anyString())).thenReturn(null);
         Map<String, String> requestDataSuccess = new HashMap<>();
         requestDataSuccess.put("email", email);
         requestDataSuccess.put("upass", password);
@@ -73,7 +73,7 @@ public class UserTests {
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.code").value(1));
         // fail
-        when(userService.login(anyString(), anyString())).thenReturn(null);
+        when(userServiceImpl.login(anyString(), anyString())).thenReturn(null);
         requestDataSuccess.put("email", email);
         mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -97,7 +97,7 @@ public class UserTests {
         User user = new User(email, password, Role.NORMAL);
         user.setId(1);
         //first login to get token
-        when(userService.login(anyString(), anyString())).thenReturn(null);
+        when(userServiceImpl.login(anyString(), anyString())).thenReturn(null);
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(
                 "/user/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -114,7 +114,7 @@ public class UserTests {
                 "$.data");
         //then use token to register event
         when(userRepository.findByEmail(email)).thenReturn(user);
-        when(eventService.registerEvent(anyInt(), anyString(), anyInt())).thenReturn(ResponseBuilder.buildSuccessResponse("success", null));
+        when(photographerSelectionServiceImpl.registerEvent(any(), anyString())).thenReturn(ResponseBuilder.buildSuccessResponse("success", null));
         mockMvc.perform(MockMvcRequestBuilders.post("/event/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", token)

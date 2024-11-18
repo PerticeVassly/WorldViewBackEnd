@@ -3,7 +3,7 @@ package org.interaction.interactionbackend.controller;
 import org.interaction.interactionbackend.enums.Role;
 import org.interaction.interactionbackend.exception.WorldViewException;
 import org.interaction.interactionbackend.po.*;
-import org.interaction.interactionbackend.service.UserService;
+import org.interaction.interactionbackend.serviceimpl.UserServiceImpl;
 import org.interaction.interactionbackend.vo.ResponseVO;
 import org.interaction.interactionbackend.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,7 @@ import java.util.regex.Pattern;
 public class UserController {
 
     @Autowired
-    private UserService userService;
-
-
+    private UserServiceImpl userServiceImpl;
 
     @PostMapping("/login")
     public ResponseVO login(@RequestBody Map<String, String> requestData) {
@@ -31,7 +29,7 @@ public class UserController {
             throw WorldViewException.emailFormatWrong();
         }
         // login verification
-        return userService.login(email, password);
+        return userServiceImpl.login(email, password);
     }
 
     @PostMapping("/add")
@@ -44,7 +42,7 @@ public class UserController {
             throw WorldViewException.emailFormatWrong();
         }
         //login in
-        return userService.register(email, upass, role);
+        return userServiceImpl.register(email, upass, role);
     }
 
     boolean checkEmailInValid(String email) {
@@ -57,14 +55,14 @@ public class UserController {
     @PostMapping("/info")
     public ResponseVO getUserInfo(HttpServletRequest request) {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
-        return userService.getUserInfo(currentUser);
+        return userServiceImpl.getUserInfo(currentUser);
     }
 
     @PostMapping("/resetInfo")
     public ResponseVO resetUserInfo(@RequestBody UserVO newUserInfo,
                                     HttpServletRequest request) {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
-        return userService.resetUserInfo(newUserInfo, currentUser);
+        return userServiceImpl.resetUserInfo(newUserInfo, currentUser);
     }
 
     @PostMapping("/resetPwd")
@@ -74,6 +72,6 @@ public class UserController {
         String oldPwd = requestData.get("oldPwd");
         String newPwd = requestData.get("newPwd");
         String renewPwd = requestData.get("renewPwd");
-        return userService.resetUserPwd(currentUser, oldPwd, newPwd, renewPwd);
+        return userServiceImpl.resetUserPwd(currentUser, oldPwd, newPwd, renewPwd);
     }
 }

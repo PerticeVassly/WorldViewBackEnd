@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.interaction.interactionbackend.enums.Role;
 import org.interaction.interactionbackend.vo.UserVO;
-
 import javax.persistence.*;
 import java.util.Optional;
 

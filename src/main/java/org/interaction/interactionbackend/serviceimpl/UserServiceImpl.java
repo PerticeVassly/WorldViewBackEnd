@@ -1,4 +1,4 @@
-package org.interaction.interactionbackend.service;
+package org.interaction.interactionbackend.serviceimpl;
 
 import org.interaction.interactionbackend.enums.Role;
 import org.interaction.interactionbackend.util.ResponseBuilder;
@@ -14,7 +14,7 @@ import org.interaction.interactionbackend.exception.WorldViewException;
 import java.util.Collections;
 
 @Service
-public class UserService {
+public class UserServiceImpl {
 
     @Autowired
     private UserRepository userRepository;
