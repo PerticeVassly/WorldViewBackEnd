@@ -20,8 +20,7 @@ public abstract class SimpleEventServiceImpl {
         // check if it has already registered
         Integer userId = user.getId();
         Integer eventId = getEventId();
-        Participant participant = participantRepository.findByUserIdAndAndEventId(userId, eventId);
-        if (participant != null) {
+        if (participantRepository.findByUserIdAndEventId(userId, eventId).isPresent()) {
             throw WorldViewException.alreadyRegisteredEvent();
         }
         // save new participant

@@ -1,5 +1,7 @@
 package org.interaction.interactionbackend.exception;
 
+import java.io.IOException;
+
 public class WorldViewException extends RuntimeException {
 
     public WorldViewException(String message) {
@@ -36,5 +38,16 @@ public class WorldViewException extends RuntimeException {
         return new WorldViewException("已经参加此评选!");
     }
 
+    public static WorldViewException userNotFound() {
+        return new WorldViewException("用户不存在!");
+    }
+
+    public static WorldViewException cannotVoteForSelf() {
+        return new WorldViewException("不能为自己投票!");
+    }
+
+    public static WorldViewException candidateNotFound() {
+        return new WorldViewException("选手不存在!");
+    }
 }
 

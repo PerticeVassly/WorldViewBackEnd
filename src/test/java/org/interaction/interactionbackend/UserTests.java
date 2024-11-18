@@ -113,7 +113,7 @@ public class UserTests {
         String token = JsonPath.read(mvcResult.getResponse().getContentAsString(),
                 "$.data");
         //then use token to register event
-        when(userRepository.findByEmail(email)).thenReturn(user);
+        when(userRepository.findByEmail(email)).thenReturn(null);
         when(photographerSelectionServiceImpl.registerEvent(any(), anyString())).thenReturn(ResponseBuilder.buildSuccessResponse("success", null));
         mockMvc.perform(MockMvcRequestBuilders.post("/event/register")
                         .contentType(MediaType.APPLICATION_JSON)

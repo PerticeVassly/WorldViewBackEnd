@@ -4,11 +4,7 @@ import org.interaction.interactionbackend.po.User;
 import org.interaction.interactionbackend.serviceimpl.events.PhotographerSelectionServiceImpl;
 import org.interaction.interactionbackend.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -26,6 +22,23 @@ public class PhotographerSelectionController {
         String photo = formData.get("photo");
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         return photographerSelectionServiceImpl.joinSelection(currentUser, contact, description, photo);
+    }
+
+    @PostMapping("/getAll")
+    public ResponseVO getAllCandidates() {
+        return photographerSelectionServiceImpl.getAllCandidates();
+    }
+
+    @PostMapping("/vote/{email}")
+    public ResponseVO voteFor(@PathVariable("email") String userVotedEmail, HttpServletRequest request) {
+        User userVoting = (User) request.getSession().getAttribute("currentUser");
+        return photographerSelectionServiceImpl.voteFor(userVoting, userVotedEmail);
+    }
+
+    @PostMapping("/hasVoted/{email}")
+    public ResponseVO hasVoted(@PathVariable("email") String userVotedEmail, HttpServletRequest request) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return photographerSelectionServiceImpl.hasVoted(currentUser, userVotedEmail);
     }
 
 }

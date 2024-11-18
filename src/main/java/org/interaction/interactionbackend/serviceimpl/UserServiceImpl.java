@@ -23,18 +23,14 @@ public class UserServiceImpl {
     private TokenUtil tokenUtil;
 
     public ResponseVO login(String email, String password) {
-        User user = userRepository.findByEmailAndPassword(email, password);
-        if (user == null) {
-            throw WorldViewException.pwdWrong();
-        }
+        User user = userRepository.findByEmailAndPassword(email, password).orElseThrow(WorldViewException::pwdWrong);
         // login success and return token
         return ResponseBuilder.buildSuccessResponse("登录成功", tokenUtil.getToken(user));
     }
 
     public ResponseVO register(String email, String password, Role role) {
         // check email has existed
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
+        if (userRepository.findByEmail(email).isPresent()) {
             throw WorldViewException.emailExist();
         }
         //save user

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
-    private TokenIntercepter tokenIntercepter;
+    private TokenInterceptor tokenInterceptor;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -23,11 +23,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(tokenIntercepter)
+        registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/login")
-                .excludePathPatterns("/user/add");
-//                .excludePathPatterns("/**");
+                .excludePathPatterns("/user/add")
+                .excludePathPatterns("/event/3/getAll");
     }
 }
 

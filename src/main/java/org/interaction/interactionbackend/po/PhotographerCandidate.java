@@ -27,14 +27,33 @@ public class PhotographerCandidate {
     @Column(name = "photo",nullable = false)
     private String photo;
 
+    @Column(name = "votes",nullable = false)
+    private Integer votes = 0; // votes got by the candidate
+
+    @Column(name = "votingFor")
+    private Integer votingfor; // the candidate who is voted By this candidate
+
     public PhotographerCandidate(int userId, String contact, String description, String photo) {
         this.userId = userId;
         this.contact = contact;
         this.description = description;
         this.photo = photo;
+        this.votes = 0;
     }
 
     public PhotographerCandidate() {}
+
+    public void beVoted() {
+        this.votes++;
+    }
+
+    public void voteFor(int userId) {
+        this.votingfor = userId;
+    }
+
+    public boolean hasVoted(int userId) {
+        return this.votingfor == userId;
+    }
 
 
 }

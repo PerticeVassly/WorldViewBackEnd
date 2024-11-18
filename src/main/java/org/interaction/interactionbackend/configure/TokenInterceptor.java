@@ -1,6 +1,5 @@
 package org.interaction.interactionbackend.configure;
 
-
 import org.interaction.interactionbackend.exception.WorldViewException;
 import org.interaction.interactionbackend.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 @Component
-public class TokenIntercepter implements HandlerInterceptor {
+public class TokenInterceptor implements HandlerInterceptor {
 
     @Autowired
     TokenUtil tokenUtil;
@@ -26,5 +24,4 @@ public class TokenIntercepter implements HandlerInterceptor {
             throw WorldViewException.notLogin();
         }
     }
-
 }
