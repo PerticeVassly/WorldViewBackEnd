@@ -49,7 +49,6 @@ public class UserTests {
     public static void setUp() {
         try {
             EnvLoader.loadEnv(".env");
-            System.out.println(System.getenv("DB_NAME"));
         } catch (Exception e) {
             e.printStackTrace();
         }

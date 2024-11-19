@@ -15,10 +15,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8080") // the address allowed to access
+                .allowedOrigins("**") // the address allowed to access
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // allowed methods
-                .allowedHeaders("*") // allowed headers
-                .allowCredentials(true); // allow credentials
+                .allowedHeaders("*"); // allowed headers
+//                .allowCredentials(true); // allow credentials
     }
 
     @Override
@@ -27,7 +27,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/login")
                 .excludePathPatterns("/user/add")
-                .excludePathPatterns("/event/3/getAll");
+                .excludePathPatterns("/event/3/getAll")
+                .excludePathPatterns("/error")
+//                .excludePathPatterns("/image/upload")
+                .order(0);
     }
 }
 

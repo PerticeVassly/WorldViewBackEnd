@@ -16,7 +16,8 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String token = request.getHeader("token");
+        // 打印请求路径
+        String token = request.getHeader("Authorization");
         if (token != null && tokenUtil.verifyToken(token)) {
             request.getSession().setAttribute("currentUser",tokenUtil.getUser(token));
             return true;
