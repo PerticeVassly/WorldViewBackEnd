@@ -1,6 +1,7 @@
 package org.interaction.interactionbackend.vo;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.interaction.interactionbackend.po.PhotographerCandidate;
 import org.interaction.interactionbackend.po.User;
@@ -16,6 +17,7 @@ import org.interaction.interactionbackend.po.User;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 public class PhotographerCandidateVO {
 
     String email;

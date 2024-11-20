@@ -1,12 +1,14 @@
 package org.interaction.interactionbackend.vo;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.interaction.interactionbackend.enums.Role;
 import org.interaction.interactionbackend.po.User;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserVO {
     private String headImg;
     private String uname;
