@@ -44,6 +44,7 @@ public class UserServiceImpl {
     }
 
     public ResponseVO resetUserInfo(UserVO newUserInfo, User user) {
+        System.out.println(newUserInfo);
         user.resetInfo(newUserInfo);
         userRepository.save(user);
         return ResponseBuilder.buildSuccessResponse("修改成功", null);
