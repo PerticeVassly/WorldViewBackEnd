@@ -18,8 +18,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = WorldViewException.class)
     @ResponseStatus(HttpStatus.OK)
     public ResponseVO handleAIExternalException(WorldViewException e) {
-//        e.printStackTrace();
-        logger.debug("AI External Exception: {}", e.getMessage());
+        logger.info("An Exception: {}", e.getMessage());
         return ResponseBuilder.buildErrorResponse(e.getMessage(), null);
     }
 }
