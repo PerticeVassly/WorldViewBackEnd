@@ -24,6 +24,12 @@ public class PhotographerSelectionController {
         return photographerSelectionServiceImpl.joinSelection(currentUser, contact, description, photo);
     }
 
+    @PostMapping("/hasRegistered")
+    public ResponseVO hasRegistered(HttpServletRequest request) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return photographerSelectionServiceImpl.hasRegistered(currentUser);
+    }
+
     @PostMapping("/getAll")
     public ResponseVO getAllCandidates() {
         return photographerSelectionServiceImpl.getAllCandidates();

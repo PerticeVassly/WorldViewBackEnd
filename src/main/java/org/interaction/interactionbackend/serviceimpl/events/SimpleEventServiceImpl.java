@@ -26,5 +26,15 @@ public abstract class SimpleEventServiceImpl {
         return ResponseBuilder.buildSuccessResponse("报名活动成功", null);
     }
 
+    public ResponseVO hasRegistered(User currentUser) {
+        Integer userId = currentUser.getId();
+        Integer eventId = getEventId();
+        if (participantRepository.findByUserIdAndEventId(userId, eventId).isPresent()) {
+            return ResponseBuilder.buildSuccessResponse("已报名", null);
+        } else {
+            return ResponseBuilder.buildErrorResponse("未报名", null);
+        }
+    }
+
     public abstract Integer getEventId();
 }

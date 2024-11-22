@@ -24,4 +24,10 @@ public class ExperienceSharingSessionController {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         return experienceSharingSessionServiceImpl.registerEvent(currentUser, contact);
     }
+
+    @PostMapping("/hasRegistered")
+    public ResponseVO hasRegistered(HttpServletRequest request) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return experienceSharingSessionServiceImpl.hasRegistered(currentUser);
+    }
 }
