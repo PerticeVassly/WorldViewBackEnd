@@ -1,6 +1,7 @@
 package org.interaction.interactionbackend.controller.events;
 
 import org.interaction.interactionbackend.po.User;
+import org.interaction.interactionbackend.serviceimpl.events.PhotographerExhibitionServiceImpl;
 import org.interaction.interactionbackend.serviceimpl.events.PhotographerSelectionServiceImpl;
 import org.interaction.interactionbackend.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,13 @@ import java.util.Map;
 public class PhotographExhibitionController {
 
     @Autowired
-    private PhotographerSelectionServiceImpl photographerSelectionServiceImpl;
+    private PhotographerExhibitionServiceImpl photographerExhibitionServiceImpl;
 
     @PostMapping("/register")
     public ResponseVO registerEvent(@RequestBody Map<String, String> formData, HttpServletRequest request) {
         String contact = formData.get("contact");
         User currentUser = (User) request.getSession().getAttribute("currentUser");
-        return photographerSelectionServiceImpl.registerEvent(currentUser, contact);
+        return photographerExhibitionServiceImpl.registerEvent(currentUser, contact);
     }
 }
 
