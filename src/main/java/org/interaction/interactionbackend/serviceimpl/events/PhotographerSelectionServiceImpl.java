@@ -52,6 +52,10 @@ public class PhotographerSelectionServiceImpl extends SimpleEventServiceImpl {
         // update info of candidate
         PhotographerCandidate candidateVoting = photographerCandidateRepository.findByUserId(userVotingId).orElseThrow(WorldViewException::candidateNotFound);
         PhotographerCandidate candidateVoted = photographerCandidateRepository.findByUserId(userVotedId).orElseThrow(WorldViewException::candidateNotFound);
+        // check if it has voted for the user
+        if (candidateVoting.hasVoted(userVotedId)) {
+            throw WorldViewException.alreadyVoted();
+        }
         candidateVoted.beVoted();
         candidateVoting.voteFor(userVotedId);
         //save

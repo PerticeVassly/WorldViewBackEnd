@@ -54,6 +54,4 @@ public class PhotographerCandidate {
     public boolean hasVoted(int userId) {
         return this.votingfor == userId;
     }
-
-
 }

@@ -42,6 +42,10 @@ public class WorldViewException extends RuntimeException {
         return new WorldViewException("用户不存在!");
     }
 
+    public static WorldViewException alreadyVoted() {
+        return new WorldViewException("已经投过票了!");
+    }
+
     public static WorldViewException cannotVoteForSelf() {
         return new WorldViewException("不能为自己投票!");
     }
