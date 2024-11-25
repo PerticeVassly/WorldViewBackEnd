@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/service") //todo() changed to the "community" path
@@ -17,9 +18,9 @@ public class CommunityController {
     private CommunityServiceImpl communityServiceImpl;
 
     @PostMapping("/register")
-    public ResponseVO register(HttpServletRequest request, @RequestBody MemberVO info) {
+    public ResponseVO register(HttpServletRequest request, @RequestBody HashMap<String, String> info) {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
-        return communityServiceImpl.register(currentUser, info);
+        return communityServiceImpl.register(currentUser, info.get("contact"), info.get("description"), info.get("photo"));
     }
 
     @PostMapping("/getAll") // get ALL the photographer's info

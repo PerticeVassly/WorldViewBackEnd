@@ -29,17 +29,20 @@ public class CommunityServiceImpl {
     @Autowired
     CollectionRepository collectionRepository;
 
-    public ResponseVO register(User currentUser, MemberVO info) {
+    public ResponseVO register(User currentUser, String contact, String description, String photo) {
         if (memberRepository.findByUserId(currentUser.getId()).isPresent()) {
             throw WorldViewException.alreadyJoinedService();
         }
-        Member newMember = new Member(currentUser, info);
+        Member newMember = new Member(currentUser.getId(), contact, description, photo);
         memberRepository.save(newMember);
         return ResponseBuilder.buildSuccessResponse("成功注册摄影师", null);
     }
 
     public ResponseVO getAll() {
-        return ResponseBuilder.buildSuccessResponse("成功获取所有摄影师信息", memberRepository.findAll().stream().map(MemberVO::new).toArray());
+        return ResponseBuilder.buildSuccessResponse("成功获取所有摄影师信息", memberRepository.findAll().stream().map(member -> {
+            User user = userRepository.findById(member.getUserId()).orElseThrow(WorldViewException::userNotFound);
+            return new MemberVO(member, user);
+        }).toArray());
     }
 
     public ResponseVO getCollection(User currentUser) {
