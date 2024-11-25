@@ -1,0 +1,72 @@
+package org.interaction.interactionbackend.serviceimpl;
+
+import org.interaction.interactionbackend.exception.WorldViewException;
+import org.interaction.interactionbackend.po.Collection;
+import org.interaction.interactionbackend.po.Member;
+import org.interaction.interactionbackend.po.User;
+import org.interaction.interactionbackend.repository.CollectionRepository;
+import org.interaction.interactionbackend.repository.MemberRepository;
+import org.interaction.interactionbackend.repository.UserRepository;
+import org.interaction.interactionbackend.util.ResponseBuilder;
+import org.interaction.interactionbackend.vo.CollectionVO;
+import org.interaction.interactionbackend.vo.MemberVO;
+import org.interaction.interactionbackend.vo.ResponseVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.xml.ws.Response;
+
+@Service
+public class CommunityServiceImpl {
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    CollectionRepository collectionRepository;
+
+    public ResponseVO register(User currentUser, MemberVO info) {
+        if (memberRepository.findByUserId(currentUser.getId()).isPresent()) {
+            throw WorldViewException.alreadyJoinedService();
+        }
+        Member newMember = new Member(currentUser, info);
+        memberRepository.save(newMember);
+        return ResponseBuilder.buildSuccessResponse("成功注册摄影师", null);
+    }
+
+    public ResponseVO getAll() {
+        return ResponseBuilder.buildSuccessResponse("成功获取所有摄影师信息", memberRepository.findAll().stream().map(MemberVO::new).toArray());
+    }
+
+    public ResponseVO getCollection(User currentUser) {
+        return ResponseBuilder.buildSuccessResponse("成功获取所有收藏信息", collectionRepository.findAllByCollectingId(currentUser.getId()).stream().map(collect -> {
+            Integer collectedId = collect.getCollectedId();
+            User user = userRepository.findById(collectedId).orElseThrow(WorldViewException::userNotFound);
+            Member member = memberRepository.findByUserId(collectedId).orElseThrow(WorldViewException::memberNotFound);
+            return new CollectionVO(user, member);
+        }));
+    }
+
+    public ResponseVO collect(User currentUser, String email) {
+        Integer collectedId = userRepository.findByEmail(email).orElseThrow(WorldViewException::userNotFound).getId();
+        Integer collectingId = currentUser.getId();
+        if (collectionRepository.findByCollectingIdAndCollectedId(collectingId, collectedId).isPresent()) {
+            throw WorldViewException.hasCollected();
+        }
+        Collection newCollection = new Collection(collectingId, collectedId);
+        collectionRepository.save(newCollection);
+        return ResponseBuilder.buildSuccessResponse("收藏成功", null);
+    }
+
+    public ResponseVO cancelCollect(User currentUser, String email) {
+        Integer collectedId = userRepository.findByEmail(email).orElseThrow(WorldViewException::userNotFound).getId();
+        Integer collectingId = currentUser.getId();
+        Collection item = collectionRepository.findByCollectingIdAndCollectedId(collectingId, collectedId).orElseThrow(WorldViewException::hasNotCollected);
+        collectionRepository.delete(item);
+        return ResponseBuilder.buildSuccessResponse("取消收藏成功", null);
+    }
+}

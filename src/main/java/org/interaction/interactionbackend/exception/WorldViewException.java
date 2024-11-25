@@ -1,5 +1,7 @@
 package org.interaction.interactionbackend.exception;
 
+import org.aspectj.weaver.World;
+
 import java.io.IOException;
 
 public class WorldViewException extends RuntimeException {
@@ -52,6 +54,22 @@ public class WorldViewException extends RuntimeException {
 
     public static WorldViewException candidateNotFound() {
         return new WorldViewException("选手不存在!");
+    }
+
+    public static WorldViewException alreadyJoinedService() {
+        return new WorldViewException("已经加入服务");
+    }
+
+    public static WorldViewException hasCollected() {
+        return new WorldViewException("重复收藏");
+    }
+
+    public static WorldViewException hasNotCollected() {
+        return new WorldViewException("还未收藏");
+    }
+
+    public static WorldViewException memberNotFound() {
+        return new WorldViewException("成员未找到");
     }
 }
 

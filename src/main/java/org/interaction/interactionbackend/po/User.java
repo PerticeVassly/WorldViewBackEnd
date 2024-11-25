@@ -54,7 +54,7 @@ public class User {
         this.role = role;
     }
 
-    public boolean resetInfo(UserVO VO) {
+    public void resetInfo(UserVO VO) {
         this.headImg = Optional.ofNullable(VO.getHeadImg()).orElse(this.headImg);
         this.uname = Optional.ofNullable(VO.getUname()).orElse(this.uname);
         this.phone = Optional.ofNullable(VO.getPhone()).orElse(this.phone);
@@ -64,7 +64,6 @@ public class User {
         this.birthday = Optional.ofNullable(VO.getBirthday()).orElse(this.birthday);
         this.qq = Optional.ofNullable(VO.getQq()).orElse(this.qq);
         this.wechat = Optional.ofNullable(VO.getWechat()).orElse(this.wechat);
-        return true;
     }
 
     public User() {}
