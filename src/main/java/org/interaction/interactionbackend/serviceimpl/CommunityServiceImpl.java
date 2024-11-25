@@ -14,8 +14,7 @@ import org.interaction.interactionbackend.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.xml.ws.Response;
+
 
 @Service
 public class CommunityServiceImpl {
