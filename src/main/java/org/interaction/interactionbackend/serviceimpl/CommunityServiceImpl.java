@@ -54,6 +54,9 @@ public class CommunityServiceImpl {
     public ResponseVO collect(User currentUser, String email) {
         Integer collectedId = userRepository.findByEmail(email).orElseThrow(WorldViewException::userNotFound).getId();
         Integer collectingId = currentUser.getId();
+        if (collectingId.equals(collectedId)) {
+            throw WorldViewException.cannotCollectOrCancelCollectSelf();
+        }
         if (collectionRepository.findByCollectingIdAndCollectedId(collectingId, collectedId).isPresent()) {
             throw WorldViewException.hasCollected();
         }
@@ -65,6 +68,9 @@ public class CommunityServiceImpl {
     public ResponseVO cancelCollect(User currentUser, String email) {
         Integer collectedId = userRepository.findByEmail(email).orElseThrow(WorldViewException::userNotFound).getId();
         Integer collectingId = currentUser.getId();
+        if (collectedId.equals(collectingId)) {
+            throw WorldViewException.cannotCollectOrCancelCollectSelf();
+        }
         Collection item = collectionRepository.findByCollectingIdAndCollectedId(collectingId, collectedId).orElseThrow(WorldViewException::hasNotCollected);
         collectionRepository.delete(item);
         return ResponseBuilder.buildSuccessResponse("取消收藏成功", null);

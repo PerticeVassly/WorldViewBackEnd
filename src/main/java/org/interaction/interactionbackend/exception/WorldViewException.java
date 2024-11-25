@@ -71,5 +71,9 @@ public class WorldViewException extends RuntimeException {
     public static WorldViewException memberNotFound() {
         return new WorldViewException("成员未找到");
     }
+
+    public static WorldViewException cannotCollectOrCancelCollectSelf() {
+        return new WorldViewException("不能收藏或者取消收藏自己");
+    }
 }
 

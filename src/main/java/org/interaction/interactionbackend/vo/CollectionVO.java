@@ -3,7 +3,6 @@ package org.interaction.interactionbackend.vo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.interaction.interactionbackend.po.Collection;
 import org.interaction.interactionbackend.po.Member;
 import org.interaction.interactionbackend.po.User;
 
