@@ -11,6 +11,7 @@ import org.interaction.interactionbackend.po.User;
 @NoArgsConstructor
 public class CollectionVO {
     private String email;
+    private String headImg;
     private String uname;
     private String contact;
     private String description;
@@ -18,6 +19,7 @@ public class CollectionVO {
 
     public CollectionVO(User user, Member member) {
         this.email = user.getEmail();
+        this.headImg = user.getHeadImg();
         this.uname = user.getUname();
         this.contact = member.getContact();
         this.description = member.getDescription();

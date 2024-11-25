@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.interaction.interactionbackend.vo.MemberVO;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 @Getter
@@ -26,11 +27,11 @@ public class Member {
     @Column(name = "photo")
     private String photo;
 
-    public Member(User user, MemberVO VO) {
-        this.userId = user.getId();
-        this.contact = VO.getContact();
-        this.description = VO.getDescription();
-        this.photo = VO.getPhoto();
+    public Member(Integer userId, String contact, String description, String photo) {
+        this.userId = userId;
+        this.contact = contact;
+        this.description = description;
+        this.photo = photo;
     }
 
     public Member() {}
