@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public ResponseVO handleAIExternalException(WorldViewException e) {
         logger.info("An Exception: {}", e.getMessage());
-        System.out.println(e.getStackTrace());
+//        System.out.println(e.getStackTrace());
         return ResponseBuilder.buildErrorResponse(e.getMessage(), null);
     }
 }
