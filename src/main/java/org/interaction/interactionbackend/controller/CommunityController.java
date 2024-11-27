@@ -45,4 +45,10 @@ public class CommunityController {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         return communityServiceImpl.cancelCollect(currentUser, email);
     }
+
+    @PostMapping("/hasCollected/{email}")
+    public ResponseVO hasCollected(HttpServletRequest request, @PathVariable("email") String email) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return communityServiceImpl.hasCollected(currentUser, email);
+    }
 }
