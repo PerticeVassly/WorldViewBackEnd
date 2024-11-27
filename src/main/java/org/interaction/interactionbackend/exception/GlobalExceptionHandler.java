@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
 
 
@@ -20,8 +22,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = WorldViewException.class)
     @ResponseStatus(HttpStatus.OK)
     public ResponseVO handleAIExternalException(WorldViewException e) {
-        logger.info("An Exception: {}", e.getMessage());
-        System.out.println(e.getStackTrace());
+        StringWriter stringWriter = new StringWriter();
+        e.printStackTrace(new PrintWriter(stringWriter));
+        String stackTrace = stringWriter.toString();
+        logger.info("An exception occurred: {}\n{}", e.getMessage(), stackTrace);
         return ResponseBuilder.buildErrorResponse(e.getMessage(), null);
     }
 }

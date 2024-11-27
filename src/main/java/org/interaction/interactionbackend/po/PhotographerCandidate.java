@@ -52,6 +52,9 @@ public class PhotographerCandidate {
     }
 
     public boolean hasVoted(int userId) {
+        if (this.votingfor == null) {
+            return false;
+        }
         return this.votingfor == userId;
     }
 }
