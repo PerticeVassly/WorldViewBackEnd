@@ -2,7 +2,6 @@ package org.interaction.interactionbackend.controller;
 
 import org.interaction.interactionbackend.po.User;
 import org.interaction.interactionbackend.serviceimpl.CommunityServiceImpl;
-import org.interaction.interactionbackend.vo.MemberVO;
 import org.interaction.interactionbackend.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

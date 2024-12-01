@@ -75,5 +75,14 @@ public class WorldViewException extends RuntimeException {
     public static WorldViewException cannotCollectOrCancelCollectSelf() {
         return new WorldViewException("不能收藏或者取消收藏自己");
     }
+    public static WorldViewException photoExist() {
+        return new WorldViewException("图片已存在!");
+    }
+    public static WorldViewException photoNotFound() {
+        return new WorldViewException("图片不存在!");
+    }
+    public static WorldViewException permissionDeny() {
+        return new WorldViewException("权限不足!");
+    }
 }
 
