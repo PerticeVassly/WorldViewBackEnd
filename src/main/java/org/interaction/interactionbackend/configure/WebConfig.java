@@ -30,6 +30,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/event/3/getAll")
                 .excludePathPatterns("/error")
                 .excludePathPatterns("/service/getAll")
+                .excludePathPatterns("/photo/getAllByEmail")
+                .excludePathPatterns("/photo/getAllByTheme")
 //                .excludePathPatterns("/image/upload")
                 .order(1);
     }
