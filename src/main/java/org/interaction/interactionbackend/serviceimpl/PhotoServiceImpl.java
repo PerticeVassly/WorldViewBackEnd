@@ -1,6 +1,5 @@
 package org.interaction.interactionbackend.serviceimpl;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import org.interaction.interactionbackend.enums.PhotoTheme;
 import org.interaction.interactionbackend.exception.WorldViewException;
 import org.interaction.interactionbackend.po.Photo;
