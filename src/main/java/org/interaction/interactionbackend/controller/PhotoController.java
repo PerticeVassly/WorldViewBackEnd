@@ -32,13 +32,18 @@ public class PhotoController {
         return photoServiceImpl.deletePhoto(currentUser, url);
     }
 
-    @PostMapping("/getAllByEmail")
-    public ResponseVO getAllByEmail(@RequestParam("email") String email) {
-        return photoServiceImpl.getAllByEmail(email);
+    @PostMapping("/fetchPhotosByEmail")
+    public ResponseVO fetchPhotosByEmail(@RequestParam("email") String email, @RequestParam("page") int page, @RequestParam("limits") int limit) {
+        return photoServiceImpl.fetchPhotosByEmail(email, page, limit);
     }
 
-    @PostMapping("/getAllByTheme")
-    public ResponseVO getAllByTheme(@RequestParam("theme") PhotoTheme theme) {
-        return photoServiceImpl.getAllByTheme(theme);
+    @PostMapping("/fetchPhotosByTheme")
+    public ResponseVO fetchPhotosByTheme(@RequestParam("theme") PhotoTheme theme, @RequestParam("page") int page, @RequestParam("limits") int limit) {
+        return photoServiceImpl.fetchPhotosByTheme(theme, page, limit);
+    }
+
+    @PostMapping("/fetchPhotos")
+    public ResponseVO fetchPhotos(@RequestParam("page") int page, @RequestParam("limit") int limit) {
+        return photoServiceImpl.fetchPhotos(page, limit);
     }
 }
