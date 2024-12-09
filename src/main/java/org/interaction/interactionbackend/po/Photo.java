@@ -22,6 +22,9 @@ public class Photo {
     @Column(name = "url", nullable = false)
     private String url;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "description")
     private String description;
 

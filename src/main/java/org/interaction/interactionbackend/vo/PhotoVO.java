@@ -13,7 +13,9 @@ import org.interaction.interactionbackend.po.User;
 public class PhotoVO {
 
     private String userEmail;
+    private String uname;
     private String url;
+    private String title;
     private String description;
     private PhotoTheme theme;
 
@@ -22,5 +24,7 @@ public class PhotoVO {
        this.url = photo.getUrl();
        this.description = photo.getDescription();
        this.theme = photo.getTheme();
+       this.title = photo.getTheme().toString();
+       this.uname = user.getUname();
     }
 }
