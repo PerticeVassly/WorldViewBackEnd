@@ -74,4 +74,9 @@ public class UserController {
         String renewPwd = requestData.get("renewPwd");
         return userServiceImpl.resetUserPwd(currentUser, oldPwd, newPwd, renewPwd);
     }
+
+    @PostMapping("/getInfoByEmail")
+    public ResponseVO getInfoByEmail(@RequestParam("email") String email) {
+        return userServiceImpl.getInfoByEmail(email);
+    }
 }
