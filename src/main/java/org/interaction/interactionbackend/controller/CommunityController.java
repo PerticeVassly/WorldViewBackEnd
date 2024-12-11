@@ -50,19 +50,19 @@ public class CommunityController {
         return communityServiceImpl.hasCollected(currentUser, email);
     }
 
-    @PostMapping("/favorite/{email}")
+    @PostMapping("/favor/{email}")
     public ResponseVO favorite(HttpServletRequest request, @PathVariable("email") String email) {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         return communityServiceImpl.favorite(currentUser, email);
     }
 
-    @PostMapping("/cancelFavorite/{email}")
+    @PostMapping("/cancelFavor/{email}")
     public ResponseVO cancelFavorite(HttpServletRequest request, @PathVariable("email") String email) {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         return communityServiceImpl.cancelFavorite(currentUser, email);
     }
 
-    @PostMapping("/hasFavorited/{email}")
+    @PostMapping("/hasFavored/{email}")
     public ResponseVO hasFavorited(HttpServletRequest request, @PathVariable("email") String email) {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         return communityServiceImpl.hasFavorited(currentUser, email);
@@ -79,5 +79,15 @@ public class CommunityController {
         return communityServiceImpl.upload(currentUser, info);
     }
 
+    @PostMapping("/getAllPhotos/{email}")
+    public ResponseVO getAllPhotos(@PathVariable("email") String email) {
+        return communityServiceImpl.getAllPhotos(email);
+    }
+
+    @PostMapping("/hasJoined")
+    public ResponseVO hasJoined(HttpServletRequest request) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return communityServiceImpl.hasJoined(currentUser);
+    }
 
 }

@@ -13,6 +13,4 @@ import java.util.Optional;
 @Repository
 public interface FavorPhotographerRepository extends JpaRepository<FavorPhotographer, Integer> {
     Optional<FavorPhotographer> findByFavoringIdAndFavoredId(Integer favoringId, Integer favoredId);
-
-    List<FavorPhotographer> findAllByFavoringId(Integer favoringId);
 }

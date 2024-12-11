@@ -6,6 +6,7 @@ import org.interaction.interactionbackend.po.*;
 import org.interaction.interactionbackend.repository.*;
 import org.interaction.interactionbackend.util.ResponseBuilder;
 import org.interaction.interactionbackend.vo.MemberVO;
+import org.interaction.interactionbackend.vo.PhotoVO;
 import org.interaction.interactionbackend.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -149,5 +150,22 @@ public class CommunityServiceImpl {
         photoRepository.saveAll(info.stream().map(
                 item -> new Photo(currentUser.getId(), item.get("url"), item.get("title"), item.get("description"), PhotoTheme.valueOf(item.get("theme")))).collect(Collectors.toList()));
         return ResponseBuilder.buildSuccessResponse("上传成功", null);
+    }
+
+    public ResponseVO getAllPhotos(String email) {
+        Integer userId = userRepository.findByEmail(email).orElseThrow(WorldViewException::userNotFound).getId();
+        List<PhotoVO> photos = photoRepository.findAllByUserId(userId).stream().map(photo -> {
+            User user = userRepository.findById(photo.getUserId()).orElseThrow(WorldViewException::userNotFound);
+            return new PhotoVO(photo, user);
+        }).collect(Collectors.toList());
+        return ResponseBuilder.buildSuccessResponse("成功获取所有照片", photos);
+    }
+
+    public ResponseVO hasJoined(User currentUser) {
+        if (memberRepository.findByUserId(currentUser.getId()).isPresent()) {
+            return ResponseBuilder.buildSuccessResponse("已加入", null);
+        } else {
+            return ResponseBuilder.buildSuccessResponse("未加入", null);
+        }
     }
 }
