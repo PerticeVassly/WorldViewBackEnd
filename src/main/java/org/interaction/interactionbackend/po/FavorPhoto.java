@@ -14,15 +14,15 @@ public class FavorPhoto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "favoringId", nullable = false)
-    private Integer favoringId;
+    @Column(name = "userId", nullable = false)
+    private Integer userId;
 
-    @Column(name = "favoredId", nullable = false)
-    private Integer favoredId;
+    @Column(name = "url", nullable = false)
+    private String url;
 
-    public FavorPhoto(Integer favoringId, Integer favoredId) {
-        this.favoringId = favoringId;
-        this.favoredId = favoredId;
+    public FavorPhoto(Integer userId, String url) {
+        this.userId = userId;
+        this.url = url;
     }
 
     public FavorPhoto() {}

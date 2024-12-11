@@ -45,4 +45,27 @@ public class PhotoController {
     public ResponseVO fetchPhotos(@RequestParam("page") int page, @RequestParam("limit") int limit) {
         return photoServiceImpl.fetchPhotos(page, limit);
     }
+
+    @PostMapping("/favor/{url}")
+    public ResponseVO favorPhoto(HttpServletRequest request, @PathVariable("url") String url) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return photoServiceImpl.favorPhoto(currentUser, url);
+    }
+
+    @PostMapping("/cancelFavor/{url}")
+    public ResponseVO cancelFavorPhoto(HttpServletRequest request, @PathVariable("url") String url) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return photoServiceImpl.cancelFavorPhoto(currentUser, url);
+    }
+
+    @PostMapping("/hasFavor/{url}")
+    public ResponseVO hasFavorPhoto(HttpServletRequest request, @PathVariable("url") String url) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return photoServiceImpl.hasFavorPhoto(currentUser, url);
+    }
+
+    @PostMapping("/getFavoredPhotos/{email}")
+    public ResponseVO getFavoredPhotos(@PathVariable("email") String email) {
+        return photoServiceImpl.getFavoringPhotos(email);
+    }
 }
