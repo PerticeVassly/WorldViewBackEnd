@@ -31,5 +31,4 @@ public class UserVO {
         this.wechat = user.getWechat();
         this.role = user.getRole();
     }
-
 }

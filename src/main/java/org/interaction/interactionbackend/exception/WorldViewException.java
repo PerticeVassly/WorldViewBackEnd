@@ -1,9 +1,5 @@
 package org.interaction.interactionbackend.exception;
 
-import org.aspectj.weaver.World;
-
-import java.io.IOException;
-
 public class WorldViewException extends RuntimeException {
 
     public WorldViewException(String message) {
@@ -60,20 +56,20 @@ public class WorldViewException extends RuntimeException {
         return new WorldViewException("已经加入服务");
     }
 
-    public static WorldViewException hasCollected() {
-        return new WorldViewException("重复收藏");
+    public static WorldViewException hasOperated() {
+        return new WorldViewException("重复操作");
     }
 
-    public static WorldViewException hasNotCollected() {
-        return new WorldViewException("还未收藏");
+    public static WorldViewException hasNotOperated() {
+        return new WorldViewException("尚未操作");
     }
 
     public static WorldViewException memberNotFound() {
         return new WorldViewException("成员未找到");
     }
 
-    public static WorldViewException cannotCollectOrCancelCollectSelf() {
-        return new WorldViewException("不能收藏或者取消收藏自己");
+    public static WorldViewException selfOperationNotAllowed() {
+        return new WorldViewException("不能对自身进行操作");
     }
     public static WorldViewException photoExist() {
         return new WorldViewException("图片已存在!");

@@ -31,4 +31,12 @@ public class Photo {
     @Column(name = "theme")
     private PhotoTheme theme;
 
+    public Photo(Integer userId, String url, String title, String description, PhotoTheme theme) {
+        this.userId = userId;
+        this.url = url;
+        this.title = title;
+        this.description = description;
+        this.theme = theme;
+    }
+
 }

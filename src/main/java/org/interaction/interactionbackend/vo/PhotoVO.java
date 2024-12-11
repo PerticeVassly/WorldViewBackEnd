@@ -23,8 +23,7 @@ public class PhotoVO {
        this.userEmail = user.getEmail();
        this.url = photo.getUrl();
        this.description = photo.getDescription();
-       this.theme = photo.getTheme();
-       this.title = photo.getTheme().toString();
+       this.title = photo.getTitle();
        this.uname = user.getUname();
     }
 }

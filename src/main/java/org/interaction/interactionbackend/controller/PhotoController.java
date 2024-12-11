@@ -21,8 +21,7 @@ public class PhotoController {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         String url = body.get("url");
         String description = body.get("description");
-        PhotoTheme theme = PhotoTheme.valueOf(body.get("theme"));
-        return photoServiceImpl.addPhoto(currentUser, url, description, theme);
+        return photoServiceImpl.addPhoto(currentUser, url, description, null);
     }
 
     @PostMapping("/delete")

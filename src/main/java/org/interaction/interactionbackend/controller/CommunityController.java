@@ -5,9 +5,9 @@ import org.interaction.interactionbackend.serviceimpl.CommunityServiceImpl;
 import org.interaction.interactionbackend.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/service") //todo() changed to the "community" path
@@ -27,10 +27,9 @@ public class CommunityController {
         return communityServiceImpl.getAll();
     }
 
-    @PostMapping("/getCollection")
-    public ResponseVO getCollection(HttpServletRequest request) {
-        User currentUser = (User) request.getSession().getAttribute("currentUser");
-        return communityServiceImpl.getCollection(currentUser);
+    @PostMapping("/getCollection/{email}")
+    public ResponseVO getCollection(@PathVariable("email") String email) {
+        return communityServiceImpl.getCollection(email);
     }
 
     @PostMapping("/collect/{email}")
@@ -50,4 +49,45 @@ public class CommunityController {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         return communityServiceImpl.hasCollected(currentUser, email);
     }
+
+    @PostMapping("/favor/{email}")
+    public ResponseVO favorite(HttpServletRequest request, @PathVariable("email") String email) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return communityServiceImpl.favorite(currentUser, email);
+    }
+
+    @PostMapping("/cancelFavor/{email}")
+    public ResponseVO cancelFavorite(HttpServletRequest request, @PathVariable("email") String email) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return communityServiceImpl.cancelFavorite(currentUser, email);
+    }
+
+    @PostMapping("/hasFavored/{email}")
+    public ResponseVO hasFavorited(HttpServletRequest request, @PathVariable("email") String email) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return communityServiceImpl.hasFavorited(currentUser, email);
+    }
+
+    @PostMapping("/getFans/{email}")
+    public ResponseVO getFans(@PathVariable("email") String email) {
+        return communityServiceImpl.getFans(email);
+    }
+
+    @PostMapping("/upload") // 上传到个人相册
+    public ResponseVO upload(HttpServletRequest request, @RequestBody List<HashMap<String, String>> info) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return communityServiceImpl.upload(currentUser, info);
+    }
+
+    @PostMapping("/getAllPhotos/{email}")
+    public ResponseVO getAllPhotos(@PathVariable("email") String email) {
+        return communityServiceImpl.getAllPhotos(email);
+    }
+
+    @PostMapping("/hasJoined")
+    public ResponseVO hasJoined(HttpServletRequest request) {
+        User currentUser = (User) request.getSession().getAttribute("currentUser");
+        return communityServiceImpl.hasJoined(currentUser);
+    }
+
 }
