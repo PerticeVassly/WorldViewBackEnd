@@ -154,10 +154,7 @@ public class CommunityServiceImpl {
 
     public ResponseVO getAllPhotos(String email) {
         Integer userId = userRepository.findByEmail(email).orElseThrow(WorldViewException::userNotFound).getId();
-        List<PhotoVO> photos = photoRepository.findAllByUserId(userId).stream().map(photo -> {
-            User user = userRepository.findById(photo.getUserId()).orElseThrow(WorldViewException::userNotFound);
-            return new PhotoVO(photo, user);
-        }).collect(Collectors.toList());
+        List<String> photos = photoRepository.findAllByUserId(userId).stream().map(Photo::getUrl).collect(Collectors.toList());
         return ResponseBuilder.buildSuccessResponse("成功获取所有照片", photos);
     }
 
