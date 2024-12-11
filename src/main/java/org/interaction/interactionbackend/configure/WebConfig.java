@@ -31,6 +31,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/event/3/getAll")
                 .excludePathPatterns("/error")
                 .excludePathPatterns("/service/getAll")
+                .excludePathPatterns("/service/getCollection/**")
+                .excludePathPatterns("/service/getFans/**")
                 .excludePathPatterns("/photo/fetchPhotos")
                 .excludePathPatterns("/photo/fetchPhotosByTheme")
                 .excludePathPatterns("/photo/fetchPhotosByEmail")
