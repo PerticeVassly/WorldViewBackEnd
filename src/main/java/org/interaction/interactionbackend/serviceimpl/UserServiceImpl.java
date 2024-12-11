@@ -62,10 +62,4 @@ public class UserServiceImpl {
            throw WorldViewException.pwdNotSame();
        }
     }
-
-    public ResponseVO getInfoByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(WorldViewException::userNotFound);
-        return ResponseBuilder.buildSuccessResponse("获取成功",
-                new UserVO(user));
-    }
 }

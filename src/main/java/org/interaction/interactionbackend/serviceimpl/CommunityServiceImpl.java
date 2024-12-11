@@ -6,7 +6,6 @@ import org.interaction.interactionbackend.po.*;
 import org.interaction.interactionbackend.repository.*;
 import org.interaction.interactionbackend.util.ResponseBuilder;
 import org.interaction.interactionbackend.vo.MemberVO;
-import org.interaction.interactionbackend.vo.PhotoVO;
 import org.interaction.interactionbackend.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
