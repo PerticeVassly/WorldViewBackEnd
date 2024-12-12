@@ -17,4 +17,6 @@ public interface FavorPhotoRepository extends JpaRepository<FavorPhoto, Integer>
     Optional<FavorPhoto> findByUserIdAndUrl(Integer userId, String url);
 
     List<FavorPhoto> findAllByUserId(Integer userId);
+
+    int countByUrl(String url);
 }

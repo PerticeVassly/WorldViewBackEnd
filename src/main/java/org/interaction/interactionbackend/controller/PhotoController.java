@@ -68,4 +68,9 @@ public class PhotoController {
     public ResponseVO getFavoredPhotos(@PathVariable("email") String email) {
         return photoServiceImpl.getFavoringPhotos(email);
     }
+
+    @PostMapping("/getFavoredNum")
+    public ResponseVO getFavoredNum(@RequestParam("url") String url) {
+        return photoServiceImpl.getFavoredNum(url);
+    }
 }

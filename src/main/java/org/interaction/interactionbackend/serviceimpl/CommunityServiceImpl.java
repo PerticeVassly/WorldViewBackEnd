@@ -6,6 +6,7 @@ import org.interaction.interactionbackend.po.*;
 import org.interaction.interactionbackend.repository.*;
 import org.interaction.interactionbackend.util.ResponseBuilder;
 import org.interaction.interactionbackend.vo.MemberVO;
+import org.interaction.interactionbackend.vo.PhotoVO;
 import org.interaction.interactionbackend.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -163,5 +164,13 @@ public class CommunityServiceImpl {
         } else {
             return ResponseBuilder.buildSuccessResponse("未加入", null);
         }
+    }
+
+    /* 获取被点赞数 */
+    public ResponseVO getFavoredNum(String email) {
+        Integer favoredId = userRepository.findByEmail(email).orElseThrow(WorldViewException::userNotFound).getId();
+        HashMap<String, Integer> res = new HashMap<>();
+        res.put("number", favorPhotographerRepository.findAllByFavoredId(favoredId).size());
+        return ResponseBuilder.buildSuccessResponse("成功获取被点赞数", res);
     }
 }

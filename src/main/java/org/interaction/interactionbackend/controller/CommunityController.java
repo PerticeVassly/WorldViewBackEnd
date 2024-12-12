@@ -90,4 +90,10 @@ public class CommunityController {
         return communityServiceImpl.hasJoined(currentUser);
     }
 
+    @PostMapping("/getFavors/{email}") // 获取email用户被点赞数
+    public ResponseVO getFavors(@PathVariable("email") String email) {
+        return communityServiceImpl.getFavoredNum(email);
+    }
+
+
 }

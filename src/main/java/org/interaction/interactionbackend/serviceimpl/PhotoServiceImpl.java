@@ -128,5 +128,10 @@ public class PhotoServiceImpl {
                 .collect(Collectors.toList());
         return ResponseBuilder.buildSuccessResponse("获取成功", photoVOList);
     }
+
+    public ResponseVO getFavoredNum(String url) {
+        int favoredNum = favorPhotoRepository.countByUrl(url);
+        return ResponseBuilder.buildSuccessResponse("获取成功", favoredNum);
+    }
 }
 
