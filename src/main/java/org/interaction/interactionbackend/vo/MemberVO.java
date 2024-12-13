@@ -22,8 +22,15 @@ public class MemberVO {
         this.email = user.getEmail();
         this.headImg = user.getHeadImg();
         this.uname = user.getUname();
-        this.contact = member.getContact();
-        this.description = member.getDescription();
-        this.photo = member.getPhoto();
+        if (member == null) {
+            this.contact = null;
+            this.description = null;
+            this.photo = null;
+        }
+        else {
+            this.contact = member.getContact();
+            this.description = member.getDescription();
+            this.photo = member.getPhoto();
+        }
     }
 }

@@ -140,7 +140,7 @@ public class CommunityServiceImpl {
         Integer collectedId = userRepository.findByEmail(email).orElseThrow(WorldViewException::userNotFound).getId();
         return ResponseBuilder.buildSuccessResponse("成功获取所有粉丝", collectionRepository.findAllByCollectedId(collectedId).stream().map(collection -> {
             User user = userRepository.findById(collection.getCollectingId()).orElseThrow(WorldViewException::userNotFound);
-            return new MemberVO(memberRepository.findByUserId(collection.getCollectedId()).orElseThrow(WorldViewException::memberNotFound), user);
+            return new MemberVO(memberRepository.findByUserId(collection.getCollectedId()).orElse(null), user);
         }).toArray());
     }
 
