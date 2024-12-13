@@ -34,12 +34,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/service/getCollection/**")
                 .excludePathPatterns("/service/getFans/**")
                 .excludePathPatterns("/service/getFavors/**")
+                .excludePathPatterns("/service/getInfoByEmail/**")
                 .excludePathPatterns("/getAllPhotos/**")
                 .excludePathPatterns("/photo/fetchPhotos")
                 .excludePathPatterns("/photo/fetchPhotosByTheme")
                 .excludePathPatterns("/photo/fetchPhotosByEmail")
                 .excludePathPatterns("/photo/getFavoredNum")
-//                .excludePathPatterns("/image/upload")
                 .order(1);
     }
 }

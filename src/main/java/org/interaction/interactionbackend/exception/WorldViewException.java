@@ -80,5 +80,9 @@ public class WorldViewException extends RuntimeException {
     public static WorldViewException permissionDeny() {
         return new WorldViewException("权限不足!");
     }
+
+    public static WorldViewException invalidKey() {
+        return new WorldViewException("无效的key值");
+    }
 }
 

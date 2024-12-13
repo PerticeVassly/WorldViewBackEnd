@@ -19,9 +19,10 @@ public class PhotoController {
     @PostMapping("/add")
     public ResponseVO addPhoto(@RequestBody Map<String,String> body, HttpServletRequest request) {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
+        String title = body.get("title");
         String url = body.get("url");
         String description = body.get("description");
-        return photoServiceImpl.addPhoto(currentUser, url, description, null);
+        return photoServiceImpl.addPhoto(currentUser, title, url, description, null);
     }
 
     @PostMapping("/delete")
@@ -36,14 +37,14 @@ public class PhotoController {
         return photoServiceImpl.fetchPhotosByEmail(email, page, limit);
     }
 
-    @PostMapping("/fetchPhotosByTheme")
-    public ResponseVO fetchPhotosByTheme(@RequestParam("theme") PhotoTheme theme, @RequestParam("page") int page, @RequestParam("limits") int limit) {
-        return photoServiceImpl.fetchPhotosByTheme(theme, page, limit);
-    }
+//    @PostMapping("/fetchPhotosByTheme")
+//    public ResponseVO fetchPhotosByTheme(@RequestParam("theme") PhotoTheme theme, @RequestParam("page") int page, @RequestParam("limits") int limit) {
+//        return photoServiceImpl.fetchPhotosByTheme(theme, page, limit);
+//    }
 
     @PostMapping("/fetchPhotos")
-    public ResponseVO fetchPhotos(@RequestParam("page") int page, @RequestParam("limit") int limit) {
-        return photoServiceImpl.fetchPhotos(page, limit);
+    public ResponseVO fetchPhotos(@RequestParam("page") int page, @RequestParam("limit") int limit, @RequestParam("key") String key) {
+        return photoServiceImpl.fetchPhotos(page, limit, key);
     }
 
     @PostMapping("/favor/{url}")

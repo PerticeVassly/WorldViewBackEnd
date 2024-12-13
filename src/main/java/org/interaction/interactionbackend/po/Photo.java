@@ -31,12 +31,31 @@ public class Photo {
     @Column(name = "theme")
     private PhotoTheme theme;
 
+    @Column(name = "likes") // 这个是photo基础的likes，自行设定
+    private Integer likes;
+
+    @Column(name = "views") // 这个是photo基础的views，自行设定
+    private Integer views;
+
+    @Column(name = "rankingTag") // 这个是photo基础的rankingTag，自行设定
+    private Boolean rankingTag;
+
+    @Column(name = "newTag") // 这个是photo基础的newTag，自行设定
+    private Boolean newTag;
+
+    @Column(name = "recommendTag") // 这个是photo基础的recommendTag，自行设定
+    private Boolean recommendTag;
+
     public Photo(Integer userId, String url, String title, String description, PhotoTheme theme) {
         this.userId = userId;
         this.url = url;
         this.title = title;
         this.description = description;
         this.theme = theme;
+        this.rankingTag = false;
+        this.newTag = false;
+        this.recommendTag = false;
+        this.likes = 0;
+        this.views = 0;
     }
-
 }

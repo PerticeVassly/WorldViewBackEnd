@@ -29,12 +29,13 @@ public class PhotoServiceImpl {
     @Autowired
     private FavorPhotoRepository favorPhotoRepository;
 
-    public ResponseVO addPhoto(User currentUser, String url, String description, PhotoTheme theme) {
+    public ResponseVO addPhoto(User currentUser, String title, String url, String description, PhotoTheme theme) {
         Photo photo = new Photo();
         photo.setUserId(currentUser.getId());
         photo.setUrl(url);
         photo.setDescription(description);
         photo.setTheme(theme);
+        photo.setTitle(title);
         if (photoRepository.findByUrl(url).isPresent()) {
             throw WorldViewException.photoExist();
         }
@@ -54,26 +55,40 @@ public class PhotoServiceImpl {
     public ResponseVO fetchPhotosByEmail(String email, int page, int limits) {
         PageRequest pageRequest = PageRequest.of(page, limits);
         User user = userRepository.findByEmail(email).orElseThrow(WorldViewException::userNotFound);
-        List<PhotoVO> photoVOList = photoRepository.findByUserId(user.getId(), pageRequest).stream()
+        List<PhotoVO> photoVOList = photoRepository.findAllByUserId(user.getId(), pageRequest).stream()
                 .map(photo -> new PhotoVO(photo, user))
                 .collect(Collectors.toList());
         return ResponseBuilder.buildSuccessResponse("获取成功", photoVOList);
     }
 
-    public ResponseVO fetchPhotosByTheme(PhotoTheme theme, int page, int limits) {
-        PageRequest pageRequest = PageRequest.of(page, limits);
-        List<PhotoVO> photoVOList = photoRepository.findByTheme(theme, pageRequest).stream()
-                .map(photo -> {
-                    User user = userRepository.findById(photo.getUserId()).orElseThrow(WorldViewException::userNotFound);
-                    return new PhotoVO(photo, user);
-                })
-                .collect(Collectors.toList());
-        return ResponseBuilder.buildSuccessResponse("获取成功", photoVOList);
-    }
+//    public ResponseVO fetchPhotosByTheme(PhotoTheme theme, int page, int limits) {
+//        PageRequest pageRequest = PageRequest.of(page, limits);
+//        List<PhotoVO> photoVOList = photoRepository.findByTheme(theme, pageRequest).stream()
+//                .map(photo -> {
+//                    User user = userRepository.findById(photo.getUserId()).orElseThrow(WorldViewException::userNotFound);
+//                    return new PhotoVO(photo, user);
+//                })
+//                .collect(Collectors.toList());
+//        return ResponseBuilder.buildSuccessResponse("获取成功", photoVOList);
+//    }
 
-    public ResponseVO fetchPhotos(int page, int limit) {
+    public ResponseVO fetchPhotos(int page, int limit, String key) {
         // return the (page, limits) photos
-        List<Photo> photoList = photoRepository.findAll(PageRequest.of(page, limit)).getContent();
+        List<Photo> photoList;
+        if (key == null || key.equals("default")) {
+            photoList = photoRepository.findAll(PageRequest.of(page, limit)).getContent();
+        } else if (key.equals("new")) {
+            // 所有带有newTag的photo
+            photoList = photoRepository.findAllByNewTag(true, PageRequest.of(page, limit));
+        } else if (key.equals("recommend")) {
+            // 所有带有recommendTag的photo
+            photoList = photoRepository.findAllByRecommendTag(true, PageRequest.of(page, limit));
+        } else if (key.equals("ranking")) {
+            // 所有带有rankingTag的photo
+            photoList = photoRepository.findAllByRankingTag(true, PageRequest.of(page, limit));
+        } else {
+            throw WorldViewException.invalidKey();
+        }
         List<PhotoVO> photoVOList = photoList.stream()
                 .map(photo -> {
                     User user = userRepository.findById(photo.getUserId()).orElseThrow(WorldViewException::userNotFound);
@@ -92,6 +107,11 @@ public class PhotoServiceImpl {
         }
         FavorPhoto favorPhoto = favorPhotoRepository.findByUserIdAndUrl(userId, url).orElseThrow(WorldViewException::hasOperated);
         favorPhotoRepository.save(favorPhoto);
+
+
+        photo.setLikes(photo.getLikes() + 1);
+        photoRepository.save(photo);
+
         return ResponseBuilder.buildSuccessResponse("点赞成功", null);
     }
 
@@ -104,6 +124,10 @@ public class PhotoServiceImpl {
         }
         FavorPhoto favorPhoto = favorPhotoRepository.findByUserIdAndUrl(userId, url).orElseThrow(WorldViewException::hasOperated);
         favorPhotoRepository.delete(favorPhoto);
+
+        photo.setLikes(Math.max(photo.getLikes() - 1, 0));
+        photoRepository.save(photo);
+
         return ResponseBuilder.buildSuccessResponse("取消点赞成功", null);
     }
 

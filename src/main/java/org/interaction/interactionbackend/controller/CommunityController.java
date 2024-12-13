@@ -22,6 +22,11 @@ public class CommunityController {
         return communityServiceImpl.register(currentUser, info.get("contact"), info.get("description"), info.get("photo"));
     }
 
+    @PostMapping("/getInfoByEmail/{email}")
+    public ResponseVO getInfo(@PathVariable("email") String email) {
+        return communityServiceImpl.getInfo(email);
+    }
+
     @PostMapping("/getAll") // get ALL the photographer's info
     public ResponseVO getAll() {
         return communityServiceImpl.getAll();
