@@ -1,6 +1,7 @@
 package org.interaction.interactionbackend.po;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class FavorPhoto {
 
     @Id
@@ -25,5 +27,4 @@ public class FavorPhoto {
         this.url = url;
     }
 
-    public FavorPhoto() {}
 }

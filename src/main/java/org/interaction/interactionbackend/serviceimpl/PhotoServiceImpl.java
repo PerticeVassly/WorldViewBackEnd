@@ -105,9 +105,10 @@ public class PhotoServiceImpl {
         if (userId.equals(favoredId)) {
             throw WorldViewException.selfOperationNotAllowed();
         }
-        FavorPhoto favorPhoto = favorPhotoRepository.findByUserIdAndUrl(userId, url).orElseThrow(WorldViewException::hasOperated);
-        favorPhotoRepository.save(favorPhoto);
-
+        if (favorPhotoRepository.findByUserIdAndUrl(userId, url).isPresent()) {
+            throw WorldViewException.hasOperated();
+        }
+        favorPhotoRepository.save(new FavorPhoto(userId, url));
 
         photo.setLikes(photo.getLikes() + 1);
         photoRepository.save(photo);

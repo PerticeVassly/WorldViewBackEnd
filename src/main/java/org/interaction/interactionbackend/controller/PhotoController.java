@@ -1,6 +1,5 @@
 package org.interaction.interactionbackend.controller;
 
-import org.interaction.interactionbackend.enums.PhotoTheme;
 import org.interaction.interactionbackend.po.User;
 import org.interaction.interactionbackend.serviceimpl.PhotoServiceImpl;
 import org.interaction.interactionbackend.vo.ResponseVO;
@@ -47,20 +46,20 @@ public class PhotoController {
         return photoServiceImpl.fetchPhotos(page, limit, key);
     }
 
-    @PostMapping("/favor/{url}")
-    public ResponseVO favorPhoto(HttpServletRequest request, @PathVariable("url") String url) {
+    @PostMapping("/favor")
+    public ResponseVO favorPhoto(HttpServletRequest request, @RequestParam("url") String url) {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         return photoServiceImpl.favorPhoto(currentUser, url);
     }
 
-    @PostMapping("/cancelFavor/{url}")
-    public ResponseVO cancelFavorPhoto(HttpServletRequest request, @PathVariable("url") String url) {
+    @PostMapping("/cancelFavor")
+    public ResponseVO cancelFavorPhoto(HttpServletRequest request, @RequestParam("url") String url) {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         return photoServiceImpl.cancelFavorPhoto(currentUser, url);
     }
 
-    @PostMapping("/hasFavor/{url}")
-    public ResponseVO hasFavorPhoto(HttpServletRequest request, @PathVariable("url") String url) {
+    @PostMapping("/hasFavor")
+    public ResponseVO hasFavorPhoto(HttpServletRequest request, @RequestParam("url") String url) {
         User currentUser = (User) request.getSession().getAttribute("currentUser");
         return photoServiceImpl.hasFavorPhoto(currentUser, url);
     }
