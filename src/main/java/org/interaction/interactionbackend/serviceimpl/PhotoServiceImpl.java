@@ -155,7 +155,8 @@ public class PhotoServiceImpl {
     }
 
     public ResponseVO getFavoredNum(String url) {
-        int favoredNum = favorPhotoRepository.countByUrl(url);
+        Photo photo = photoRepository.findByUrl(url).orElseThrow(WorldViewException::photoNotFound);
+        int favoredNum = photo.getLikes();
         return ResponseBuilder.buildSuccessResponse("获取成功", favoredNum);
     }
 }
