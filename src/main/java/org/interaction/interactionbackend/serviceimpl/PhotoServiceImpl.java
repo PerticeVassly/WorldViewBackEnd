@@ -36,6 +36,8 @@ public class PhotoServiceImpl {
         photo.setDescription(description);
         photo.setTheme(theme);
         photo.setTitle(title);
+        photo.setLikes(0);
+        photo.setViews(0);
         if (photoRepository.findByUrl(url).isPresent()) {
             throw WorldViewException.photoExist();
         }
