@@ -15,7 +15,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @ConfigurationProperties("aliyun.oss")
-public class OssUtil {
+public class AliyunOss implements CloudStorageUtil {
     private String endpoint;
     private String accessKeyId;
     private String accessKeySecret;
